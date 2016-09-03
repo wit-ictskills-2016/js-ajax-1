@@ -17,13 +17,14 @@ $('#search_btn').click(function () {
   $.ajax({
     dataType: 'json',
     url: 'https://api.github.com/users/' + userName + '/repos',
-    success: function (data) {
-      updateResult(data.length + ' repos');
-      populateTable(data);
-    },
 
     error: function (err) {
       updateResult(userName + ' ' + err.statusText);
+    },
+
+    success: function (data) {
+      updateResult(data.length + ' repos');
+      populateTable(data);
     },
   });
 
