@@ -1,3 +1,13 @@
+function updateResult(result) {
+  $('#result-msg').text('');
+  $('#result-msg').text(result);
+}
+
+function populateTable(repoList) {
+  for (var i = 0; i < repoList.length; i++) {
+    $('#repo_table tbody').append('<tr><td>' + repoList[i].name + '</td></tr>');
+  }
+}
 
 $('#search_btn').click(function () {
 
@@ -8,19 +18,13 @@ $('#search_btn').click(function () {
     dataType: 'json',
     url: 'https://api.github.com/users/' + userName + '/repos',
     success: function (data) {
-      console.log('success');
+      updateResult(data.length + ' repos');
+      populateTable(data);
     },
 
     error: function (err) {
-      console.log('fail');
-      console.log(err.statusText);
-    },
-
-    success: function (data) {
-      console.log('success');
-      for (let i = 0; i < data.length; i++) {
-        console.log(data[i].name);
-      }
+      updateResult(userName + ' ' + err.statusText);
     },
   });
+
 });
